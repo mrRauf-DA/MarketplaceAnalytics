@@ -58,6 +58,30 @@ public sealed class LayerDependencyTests
         AssertHasNoDependency(ApiAssembly, DomainNamespace);
     }
 
+    [Fact]
+    public void Domain_Must_Not_Depend_On_Microsoft_Extensions_Configuration()
+    {
+        AssertHasNoDependency(DomainAssembly, "Microsoft.Extensions.Configuration");
+    }
+
+    [Fact]
+    public void Domain_Must_Not_Depend_On_Microsoft_Extensions_Options()
+    {
+        AssertHasNoDependency(DomainAssembly, "Microsoft.Extensions.Options");
+    }
+
+    [Fact]
+    public void Application_Must_Not_Depend_On_Microsoft_Extensions_Configuration()
+    {
+        AssertHasNoDependency(ApplicationAssembly, "Microsoft.Extensions.Configuration");
+    }
+
+    [Fact]
+    public void Application_Must_Not_Depend_On_Microsoft_Extensions_Options()
+    {
+        AssertHasNoDependency(ApplicationAssembly, "Microsoft.Extensions.Options");
+    }
+
     private static void AssertHasNoDependency(Assembly assembly, string forbiddenNamespace)
     {
         var result = Types
