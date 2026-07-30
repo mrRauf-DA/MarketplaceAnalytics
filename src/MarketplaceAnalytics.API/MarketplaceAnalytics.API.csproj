@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <ItemGroup>
+    <ProjectReference Include="..\MarketplaceAnalytics.Application\MarketplaceAnalytics.Application.csproj" />
+    <ProjectReference Include="..\MarketplaceAnalytics.Infrastructure\MarketplaceAnalytics.Infrastructure.csproj" />
+  </ItemGroup>
+</Project>
