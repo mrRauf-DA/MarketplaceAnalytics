@@ -1,10 +1,12 @@
 using MarketplaceAnalytics.API.Configuration;
 using MarketplaceAnalytics.Infrastructure.Persistence;
+using MarketplaceAnalytics.Infrastructure.Integrations.Ebay.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddMarketplaceAnalyticsConfiguration(builder.Configuration);
 builder.Services.AddMarketplaceAnalyticsPersistence(builder.Configuration);
+builder.Services.AddEbayAuthentication(builder.Configuration);
 
 var app = builder.Build();
 

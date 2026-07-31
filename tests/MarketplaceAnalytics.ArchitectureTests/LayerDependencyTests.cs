@@ -106,6 +106,14 @@ public sealed class LayerDependencyTests
         AssertHasNoDependency(ApplicationAssembly, "Npgsql");
     }
 
+    [Fact]
+    public void Domain_Must_Not_Depend_On_Ebay_Authentication()
+    {
+        AssertHasNoDependency(
+            DomainAssembly,
+            "MarketplaceAnalytics.Application.Integrations.Ebay.Authentication");
+    }
+
     private static void AssertHasNoDependency(Assembly assembly, string forbiddenNamespace)
     {
         var result = Types
