@@ -76,6 +76,40 @@ MarketplaceAnalytics__Ebay__OAuth__DefaultScopes__0
 MarketplaceAnalytics__Ebay__OAuth__RequestTimeoutSeconds
 ```
 
+## User access-token provider
+
+Later eBay REST clients must depend only on `IEbayUserAccessTokenProvider`. They supply
+their complete required scope set to `GetAccessTokenAsync` and receive a usable user
+access token. They never receive, read, or manage refresh-token material.
+
+Infrastructure implements the provider by reading refresh-token material through an
+internal replaceable source, calling the existing OAuth refresh grant, and caching the
+result by the normalized required-scope set. The cache uses the centralized expiration
+safety window. A shared asynchronous refresh gate prevents concurrent cache misses from
+causing uncontrolled duplicate refresh requests.
+
+The current local-only refresh-token source is configuration bound from:
+
+```text
+MarketplaceAnalytics:Ebay:UserAccessToken:RefreshToken
+```
+
+Set it with .NET User Secrets; do not add this key or its value to tracked appsettings:
+
+```powershell
+dotnet user-secrets set "MarketplaceAnalytics:Ebay:UserAccessToken:RefreshToken" "<local-user-refresh-token>" --project .\src\MarketplaceAnalytics.API
+```
+
+The equivalent process environment variable is:
+
+```text
+MarketplaceAnalytics__Ebay__UserAccessToken__RefreshToken
+```
+
+Environment variables must be managed as secrets and must never be copied into tracked
+files. A future encrypted or operating-system-backed secret source can replace the
+Infrastructure source without changing `IEbayUserAccessTokenProvider` or its consumers.
+
 ## Authorization URI generation
 
 Resolve `IEbayAuthenticationService` and call
@@ -133,6 +167,9 @@ Never log, commit, persist to files, or place in exception messages:
 
 Exceptions expose safe operation/status/error identifiers only. No PostgreSQL token
 persistence exists in this phase.
+
+Tracked appsettings, source code, documentation, logs, tests, and PostgreSQL must never
+contain real client secrets, authorization codes, access tokens, or refresh tokens.
 
 ## Testing
 

@@ -19,11 +19,17 @@ public static class EbayAuthenticationExtensions
             .AddOptions<EbayOAuthOptions>()
             .Bind(configuration.GetSection(EbayOAuthOptions.SectionName))
             .ValidateOnStart();
+        services
+            .AddOptions<EbayUserAccessTokenOptions>()
+            .Bind(configuration.GetSection(EbayUserAccessTokenOptions.SectionName));
         services.TryAddEnumerable(
             ServiceDescriptor.Singleton<IValidateOptions<EbayOAuthOptions>, EbayOAuthOptionsValidator>());
 
         services.TryAddSingleton(TimeProvider.System);
         services.TryAddSingleton<EbayEndpointResolver>();
+        services.TryAddSingleton<IEbayRefreshTokenSource, ConfigurationEbayRefreshTokenSource>();
+        services.TryAddSingleton<EbayUserAccessTokenCache>();
+        services.TryAddTransient<IEbayUserAccessTokenProvider, EbayUserAccessTokenProvider>();
         services
             .AddHttpClient<IEbayAuthenticationService, EbayAuthenticationService>(
                 (serviceProvider, client) =>
