@@ -2,6 +2,7 @@ using MarketplaceAnalytics.API.Configuration;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Xunit;
 
@@ -109,6 +110,7 @@ public sealed class MarketplaceAnalyticsConfigurationTests
     public async Task RegisteredOptions_AreValidatedWhenHostStarts()
     {
         var builder = Host.CreateApplicationBuilder();
+        builder.Logging.ClearProviders();
         builder.Configuration.Sources.Clear();
         builder.Configuration.AddInMemoryCollection(
             CreateConfigurationValues(null, "data"));

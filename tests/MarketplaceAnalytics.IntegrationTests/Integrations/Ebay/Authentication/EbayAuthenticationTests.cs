@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Xunit;
 
 namespace MarketplaceAnalytics.IntegrationTests.Integrations.Ebay.Authentication;
@@ -261,6 +262,7 @@ public sealed class EbayAuthenticationTests
     public async Task DisabledAuthentication_AllowsHostStartup()
     {
         var builder = Host.CreateApplicationBuilder();
+        builder.Logging.ClearProviders();
         builder.Configuration.Sources.Clear();
         builder.Configuration.AddInMemoryCollection(
             new Dictionary<string, string?>
@@ -279,6 +281,7 @@ public sealed class EbayAuthenticationTests
     public async Task EnabledAuthenticationWithMissingSettings_FailsHostStartup()
     {
         var builder = Host.CreateApplicationBuilder();
+        builder.Logging.ClearProviders();
         builder.Configuration.Sources.Clear();
         builder.Configuration.AddInMemoryCollection(
             new Dictionary<string, string?>
