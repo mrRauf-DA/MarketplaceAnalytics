@@ -23,6 +23,7 @@ internal sealed class EbayEndpointResolver
 
         return new EbayOAuthEndpoints(
             new Uri(authorizationHost + AuthorizationPath),
-            new Uri(apiHost + TokenPath));
+            new Uri(apiHost + TokenPath),
+            new Uri(apiHost + "/"));
     }
 }
