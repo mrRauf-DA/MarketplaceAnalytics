@@ -82,6 +82,30 @@ public sealed class LayerDependencyTests
         AssertHasNoDependency(ApplicationAssembly, "Microsoft.Extensions.Options");
     }
 
+    [Fact]
+    public void Domain_Must_Not_Depend_On_EntityFrameworkCore()
+    {
+        AssertHasNoDependency(DomainAssembly, "Microsoft.EntityFrameworkCore");
+    }
+
+    [Fact]
+    public void Domain_Must_Not_Depend_On_Npgsql()
+    {
+        AssertHasNoDependency(DomainAssembly, "Npgsql");
+    }
+
+    [Fact]
+    public void Application_Must_Not_Depend_On_EntityFrameworkCore()
+    {
+        AssertHasNoDependency(ApplicationAssembly, "Microsoft.EntityFrameworkCore");
+    }
+
+    [Fact]
+    public void Application_Must_Not_Depend_On_Npgsql()
+    {
+        AssertHasNoDependency(ApplicationAssembly, "Npgsql");
+    }
+
     private static void AssertHasNoDependency(Assembly assembly, string forbiddenNamespace)
     {
         var result = Types

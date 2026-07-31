@@ -1,4 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <UserSecretsId>MarketplaceAnalytics-7d4e65e8-71e4-4b6d-bf79-40f6960a93d9</UserSecretsId>
+  </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\MarketplaceAnalytics.Application\MarketplaceAnalytics.Application.csproj" />
     <ProjectReference Include="..\MarketplaceAnalytics.Infrastructure\MarketplaceAnalytics.Infrastructure.csproj" />
